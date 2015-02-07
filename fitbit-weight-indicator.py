@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 import pygtk
 pygtk.require('2.0')
 import gtk
@@ -24,7 +24,6 @@ class FitbitIndicator:
     self.menu.append(image)
                
     self.menu.show()
-    self.menu2 = self.menu
 
     self.ind.set_menu(self.menu)
 
@@ -38,7 +37,7 @@ class FitbitIndicator:
     # FIXME: Check if login successfull
    
     self.getFitbitData()
-    gobject.timeout_add(30 * 1000, self.getFitbitData)
+    gobject.timeout_add(60 * 1000, self.getFitbitData)
 
   def quit(self, widget, data=None):
     gtk.main_quit()
@@ -60,7 +59,17 @@ class FitbitIndicator:
     else:
       self.ind.set_icon("stock_right")
 
-    self.ind.set_label(str(weight) + " " + str(weightdiff) + " " + str(bmi))
+    batterystatus = "";
+    if self.conf['trackerid'] != '':
+      try:
+        devices = self.fitbit.get_devices()
+        for device in devices:
+          if ((device['id'] == self.conf['trackerid']) and (device['battery'] == "Low")):
+            batterystatus = " BAT!"
+      except:
+        pass
+
+    self.ind.set_label(str(weight) + " " + str(weightdiff) + " " + str(bmi) + batterystatus)
 
     return 1
 

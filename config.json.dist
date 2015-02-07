@@ -2,5 +2,6 @@
   "FitbitConsumerKey": "",
   "FitbitConsumerSecret": "",
   "FitbitUserKey": "",
-  "FitbitUserSecret": ""
+  "FitbitUserSecret": "",
+  "trackerid": ""
 }
